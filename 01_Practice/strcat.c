@@ -1,3 +1,15 @@
+//------------------------------------------------------------------------
+// NAME: Konstantin Mihaylov
+// CLASS: XIb
+// NUMBER: 13
+// PROBLEM: #6
+// FILE NAME: strcat.c
+// FILE PURPOSE: 
+// It takes two arguments, i.e, two strings or character arrays,
+// and stores the resultant concatenated string in the first string specified in the argument.
+//The pointer to the resultant string is passed as a return value. 
+//------------------------------------------------------------------------
+
 #include <stdio.h>
 #include <stdlib.h>
 

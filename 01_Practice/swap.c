@@ -3,7 +3,7 @@
 // CLASS: XIb
 // NUMBER: 13
 // PROBLEM: #3
-// FILE NAME: strdup.c
+// FILE NAME: swap.c
 // FILE PURPOSE: 
 // Swapping pointers.The function needs a way to refer to the original variables,
 // not copies of their values. How can we refer to other variables in C? Using pointers.

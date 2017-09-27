@@ -2,7 +2,7 @@
 // NAME: Konstantin Mihaylov
 // CLASS: XIb
 // NUMBER: 13
-// PROBLEM: #6
+// PROBLEM: #1
 // FILE NAME: strcat.c
 // FILE PURPOSE: 
 // It takes two arguments, i.e, two strings or character arrays,

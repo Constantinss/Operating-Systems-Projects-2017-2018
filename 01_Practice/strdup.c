@@ -2,7 +2,7 @@
 // NAME: Konstantin Mihaylov
 // CLASS: XIb
 // NUMBER: 13
-// PROBLEM: #6
+// PROBLEM: #5
 // FILE NAME: strdup.c
 // FILE PURPOSE: 
 // The strdup() function, available in various languages, 

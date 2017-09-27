@@ -5,7 +5,8 @@
 // PROBLEM: #6
 // FILE NAME: stack.c
 // FILE PURPOSE: 
-// The purpose is to initialize the basic stack functions 
+// This program implements the stack functions. Stack is a LIFO data structure.
+// Stack operations:
 // void stack_init( stack * );
 // void stack_destroy( stack * );
 // int stack_full(stack * );

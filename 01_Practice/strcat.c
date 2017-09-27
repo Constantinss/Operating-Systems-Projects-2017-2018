@@ -18,8 +18,8 @@ char* strcat( char* destination, const char* source ){
     const unsigned char *d = (const unsigned char *)destination;
     const unsigned char *s = (const unsigned char *)source;
  
-    char *string = malloc(sizeof(char *));
-    char *res = string;
+    char *string;
+    destination = string; 
 		
    
     
@@ -47,7 +47,8 @@ char* strcat( char* destination, const char* source ){
 	      }
            }
       *string = '\0';
-    return (char *)res;
+	
+    return (char *)destination;
   //much more better
   /*
 	char *string = malloc(strlen(d) + strlen(s) + 1);

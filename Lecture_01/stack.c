@@ -16,6 +16,66 @@
 // void stack_pop( stack * );
 //------------------------------------------------------------------------
 
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct{
+	size_t size;
+	size_t capacity;
+	int *elements;
+}stack;
+
+void stack_init(stack*);
+void stack_destroy(stack*);
+void stack_push(stack*, int );
+int stack_empty(stack*);
+int stack_top(stack*);
+void stack_pop(stack*);
+
+int main(int argc, char* argv[])
+{
+	return 0;
+}
+
+int stack_empty(stack* stack)
+{
+	return stack->size == 0 ? 1 : 0;
+}
+void stack_pop(stack *stack)
+{
+	if((stack->size == 0))return;
+	stack->size--;
+}
+int stack_top(stack *stack)
+{
+	if(0 == stack->size)return 0;
+	return stack->elements[stack->size - 1];
+}
+
+void stack_push(stack *stack, int elem)
+{
+	if(stack->capacity == stack->size)
+	{
+		stack->capacity *= 2;
+		stack->elements = realloc(stack->elements ,stack->capacity * sizeof(stack));
+	}
+	stack->elements[stack->size++] = elem;
+}
+void stack_destroy(stack *stack)
+{
+	stack->capacity = 0;
+	stack->size = 0;
+	free(stack->elements);
+	stack->elements = NULL;
+}
+void stack_init(stack *stack){
+	stack->capacity	= 50;
+	stack->size = 0;
+	stack->elements = malloc(stack->capacity * sizeof(stack));
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include<stdio.h>
 #include <stdlib.h>
 

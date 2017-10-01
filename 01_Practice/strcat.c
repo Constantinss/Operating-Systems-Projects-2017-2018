@@ -11,6 +11,32 @@
 //------------------------------------------------------------------------
 
 #include <stdio.h>
+#define ARG_SIZE 100
+
+char* strcat( char* destination, const char* source);
+int main(int argc, char *argv[])
+{
+	char destination_arr[ARG_SIZE];
+	char source_arr[ARG_SIZE];
+	scanf("%s%s", destination_arr, source_arr);
+	printf("%s", strcat(destination_arr, source_arr));	
+
+	return 0;
+}
+
+char* strcat( char* destination, const char* source)
+{
+	size_t i;
+	for( i = 0; destination[i] != '\0'; ++i);
+	for(size_t k = 0; source[k] != '\0'; ++k)
+		destination[i + k] = source[k];
+
+	return destination;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <stdio.h>
 #include <stdlib.h>
 
 #define SIZE_STR 30

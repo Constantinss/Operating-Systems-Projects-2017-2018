@@ -10,6 +10,27 @@
 // not copies of their values. How can we refer to other variables in C? Using pointers.
 // The original values are not changed, because the function only swaps its own private copies.
 //------------------------------------------------------------------------
+#include <stdio.h>
+
+void swap(void *, void *, size_t size);
+
+int main(int argc, char* argv[])
+{
+	return 0;
+}
+
+void swap(void *a, void *b, size_t size)
+{
+	 unsigned char * p = a, * q = b, tmp;
+    for (size_t i = 0; i != size; ++i)
+    {
+        tmp = p[i];
+        p[i] = q[i];
+        q[i] = tmp;
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include<stdio.h>
 

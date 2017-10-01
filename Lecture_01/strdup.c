@@ -12,6 +12,32 @@
 // http://linux.die.net/man/3/strdup 
 //------------------------------------------------------------------------
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+char *strdup( const char* );
+
+int main(int argc, char* argv[])
+{
+  	char array[100];
+ 	scanf("%s", array);
+	strdup(array);	
+	return 0;
+}
+char * strdup( const char* old_arr )
+{
+	int strlength = strlen(old_arr);
+	char *new_arr = malloc(strlength * sizeof(char));
+	for(size_t i = 0; i < strlength; ++i)
+	{
+		*(new_arr + i) = *(old_arr + i);
+	}
+	return new_arr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include<stdio.h>
 #include <stdlib.h>
 

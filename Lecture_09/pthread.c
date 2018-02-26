@@ -13,7 +13,7 @@ void *print_hello(void *thread_id){
 int main(int argc, char const *argv[])
 {
 	pthread_t threads[NUM_THREADS];
-	for (int i = 0; i < NUM_THREADS; ++i)
+	for (int i = 0; i < NUM_THREADS; i++)
 	{
 		printf("In main: creating thread %d\n", i );
 		int rc = pthread_create(&threads[i], NULL, print_hello, (void *) i);

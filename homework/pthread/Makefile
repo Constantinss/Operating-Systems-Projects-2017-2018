@@ -1,2 +1,2 @@
 all:
-	gcc pthread.c -lpthread -lm -o primes
+	gcc pthread.c -lpthread -lm -lgmp -o primes

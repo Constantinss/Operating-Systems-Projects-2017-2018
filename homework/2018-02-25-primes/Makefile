@@ -1,2 +1,2 @@
 all:
-	gcc pthread.c -lpthread -lm -lgmp -o primes
+	gcc scalarProduct.c -lpthread -lm -lgmp -o s

@@ -33,11 +33,11 @@ int cat_file (const char *file ){
 		perror( "ERR: open_" );
 		return 1;
 	}
-	
+
 		while( lines != READ_LINES){
 			read_bytes = read(fd, &rchar, 1);
 			if(rchar == '\n')lines ++;
-			
+
 			if( read_bytes < 0 ){
 				perror( "ERR: not reading!" );
 				return 2;
@@ -45,14 +45,14 @@ int cat_file (const char *file ){
 				break;
 			}
 			buffer[i++] = rchar;
-		}	
-  
+		}
+
        wresult = write(STDOUT_FILENO, buffer, i);
 				if( wresult < 0){
 					perror( "ERR: write_" );
 					return 4;
-				}	
-	
+				}
+
 	cresult = close(fd);
 	if( cresult < 0){
 		perror( "ERR: close_" );
@@ -60,4 +60,3 @@ int cat_file (const char *file ){
 	}
 
  return 0;
-}

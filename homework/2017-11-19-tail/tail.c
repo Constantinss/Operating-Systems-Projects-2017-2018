@@ -18,9 +18,9 @@
 #include <stdarg.h>
 
 int title(char *name, int currentSize) {
-	if(currentSize != 1) 
+	if(currentSize != 1)
 		write(STDOUT_FILENO, "\n", 1);
-	
+
 	char *header = (char *) malloc(strlen(name) + 9);
 	strcat(header, "==> ");
 	strcat(header, name);
@@ -30,16 +30,16 @@ int title(char *name, int currentSize) {
 		return 1;
 	}
 	free(header);
-	
+
 	return 0;
 }
 
-int stdWrite(char *stdInput, int lenght, int currentSize) {
-	if(lenght > 2)title(stdInput, currentSize);
+int stdWrite(char *stdInput, int length, int currentSize) {
+	if(length > 2)title(stdInput, currentSize);
 	char *input = malloc(10);
 	int elem = 0, readResult;
 	char tmp[1];
-	
+
 	while(readResult = read(STDIN_FILENO, tmp, 1) != 0) {
 		if(readResult < 0) {
 			perror("tail: error reading");
@@ -49,15 +49,15 @@ int stdWrite(char *stdInput, int lenght, int currentSize) {
 			input = realloc(input, elem + 10);
 		input[elem++] = *tmp;
 	}
-		
+
 	int tenLines = 0;
 	int counter = 0;
-	for(counter = elem - 1; counter > 0 && tenLines < 11; counter--) 
+	for(counter = elem - 1; counter > 0 && tenLines < 11; counter--)
 		if(*(input + counter) == '\n')tenLines++;
-	
+
 	if(tenLines == 11)
 		counter += 2;
-		
+
 	int lines = 0;
 	for(int i = counter; i < elem; i++) {
 		int write_result = write(STDOUT_FILENO, input + i,  1);
@@ -65,23 +65,23 @@ int stdWrite(char *stdInput, int lenght, int currentSize) {
 			perror("tail: error writing");
 			return 1;
 		} else if(write_result == 0) {
-			i--;			
+			i--;
 			continue;
 		}
 		if(*(input + i) == '\n') {
 			lines++;
 		}
 	}
-	
+
 	return 0;
 }
 
-int tail(char *file_name, int lenght, int currentSize) {
+int tail(char *file_name, int length, int currentSize) {
 	int fd = open(file_name, O_RDONLY);
 	if(fd < 0) {
 		/*specific message*/
-		char *errorMessage = (char *) malloc(strlen("tail: cannot open '") + 
-			strlen(file_name) + 
+		char *errorMessage = (char *) malloc(strlen("tail: cannot open '") +
+			strlen(file_name) +
 			strlen("' for reading"));
 		strcat(errorMessage, "tail: cannot open '");
 		strcat(errorMessage, file_name);
@@ -91,11 +91,11 @@ int tail(char *file_name, int lenght, int currentSize) {
 		free(errorMessage);
 		return 1;
 	}
-	
-	if(lenght > 2) {
+
+	if(lengt > 2) {
 		title(file_name, currentSize);
 	}
-	
+
 	char buf[1];
 	/*lseek is a system call that is used to change the location of
 	 the read/write pointer of a file descriptor.
@@ -139,7 +139,7 @@ int tail(char *file_name, int lenght, int currentSize) {
 		} else if(readResult == 0) {
 			continue;
 		}
-		
+
 		int write_result = write(STDOUT_FILENO, buf, 1);
 		if(write_result < 0) {
 			perror("tail: error writing");
@@ -167,7 +167,7 @@ int tail(char *file_name, int lenght, int currentSize) {
 		perror(errorMessage);
 		free(errorMessage);
 		return 2;
-	
+
 	}
 	return 0;
 }
@@ -177,10 +177,10 @@ int main(int argc, char **argv) {
 	int standardInput = -1;
 	int tailResult = -1;
 	int checkFirst = 1;
-	
+
 	if(argc == 1)
 		standardInput = stdWrite("standard input", argc, checkFirst);
-		
+
 	for(int i = 1; i < argc; i++) {
 		if(checkFirst == 0) {
 			checkFirst = i;

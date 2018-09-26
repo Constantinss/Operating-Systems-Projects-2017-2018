@@ -7,11 +7,8 @@
 #include <errno.h>
 #include <ctype.h>
 
-
 int RemainingMoney = 10000;
 pthread_mutex_t mutex;
-
-
 
 void * withdraw(void * arg){
 	int t1 = 0;
@@ -55,42 +52,41 @@ void * deposited(void * arg){
  pthread_exit(NULL);
 }
 
-int main(int argc, char const *argv[])
-{
-	long withdraw_attr = 1;
-	long deposited_attr = 1;
+int main(int argc, char const *argv[]) {
 
-	if(argc >= 2 && atoi(argv[1]) >= 1 && atoi(argv[2]) >= 1){
-		withdraw_attr = atoi(argv[1]);
-		deposited_attr = atoi(argv[2]);
-	}
+  long withdraw_attr = 1;
+  long deposited_attr = 1;
 
+  if(argc >= 2 && atoi(argv[1]) >= 1 && atoi(argv[2]) >= 1){
+    withdraw_attr = atoi(argv[1]);
+    deposited_attr = atoi(argv[2]);
+  }
 
-	pthread_t withdraw_t[1000];
-	pthread_t deposited_t[1000];
-	pthread_mutex_init(&mutex,NULL);
+  //INIT THE PTHREAD & MUTEX
+  pthread_t withdraw_t[1000];
+  pthread_t deposited_t[1000];
+  //pthread_mutex_init(&mutex, NULL);
 
-	for (long i = 0; i < withdraw_attr; ++i)
-	{
-		pthread_create(&withdraw_t[i], NULL, &withdraw, (void*)i);
-	}
-	for (long i = 0; i < deposited_attr; ++i)
-	{
-		pthread_create(&deposited_t[i], NULL, &deposited, (void*)i);
-	}
-	for (long i = 0; i < withdraw_attr; ++i)
-	{
-		pthread_join(withdraw_t[i], NULL);
-	}
-	for (long i = 0; i < deposited_attr; ++i)
-	{
-		pthread_join(deposited_t[i], NULL);
-	}
+  //CREATE PTHREAD
+  for (long t = 0; t < withdraw_attr; t++) {
+    pthread_create(&withdraw_t[t], NULL, &withdraw, (void*)t);
+  }
+  for (long t = 0; t < deposited_attr; t++) {
+    pthread_create(&deposited_t[t], NULL, &deposited, (void*)t);
+  }
+  //JOIN PTHREAD
+  for (long t = 0; t < withdraw_attr; t++) {
+    	pthread_join(withdraw_t[t], NULL);
+  }
+  for (long t = 0; t < deposited_attr; t++) {
+      pthread_join(deposited_t[t], NULL);
+  }
 
-	pthread_mutex_destroy(&mutex);
+  //DESTORY MUTEX
+  pthread_mutex_destroy(&mutex);
 	if (RemainingMoney > 0)
 		printf("Remaining money: %d\n", RemainingMoney);
 	else
-		printf("BANKRUT!\n");
-	return 0;
+		printf("BANKRUPT!\n");
+  return 0;
 }

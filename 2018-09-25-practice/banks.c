@@ -1,79 +1,68 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
-
+//PTHREAD
 #include <pthread.h>
 #include <ctype.h>
 
 int banks_money[1000];
+int flag_money[1000];
 pthread_mutex_t mutex[1000];
 
-//PTHREAD FOR TRANSACTIONS
-void * transaction(void * arg){
+void * transaction(void * arg) {
   long n = (long) arg;
-
-  for (size_t i = 0; i < 1000; i++) {
+  for (size_t c = 0; c < 1000; c++) {
     pthread_mutex_lock(&mutex[n]);
-    if(banks_money[n] != 0){
-      banks_money[n] -= 50; //BANK1
-    }
+      if(banks_money[n] != 0){
+        banks_money[n] -= 50;
+      }else{
+        flag_money[n] = 0;
+      }
     pthread_mutex_unlock(&mutex[n]);
-
     pthread_mutex_lock(&mutex[n + 1]);
-    if(banks_money[n] != 0){
-      banks_money[n + 1] += 50; //BANK2
-    }
+      if(flag_money[n] == 1)
+      banks_money[n + 1] += 50;
     pthread_mutex_unlock(&mutex[n + 1]);
   }
-
   pthread_exit(NULL);
 }
 
 int main(int argc, char const *argv[]) {
 
-  pthread_t banks_th[1000];
-  int banks = 3; //bankers in all banks
-  int trans = 2; //transaction
+  pthread_t banks_t[1000];
+  int banks = 3; //basic case for banks
+  int trans = 2;
 
-  //SET BANKERS & TRANSACTIONS
-  if(argc > 2){
-    if(atoi(argv[1]) == atoi(argv[2]) - 1){
-      banks = atoi(argv[2]);
-      trans = atoi(argv[1]);
-    }else{
-      perror("arguments");
-      exit(-1);
-    }
+  if(argc > 2 && atoi(argv[1]) == atoi(argv[2]) + 1){
+    banks = atoi(argv[1]);
+    trans = atoi(argv[2]);
   }
 
-  //SET MUTEXES FOR BANKS
-  for (size_t i = 0; i < banks; i++) {
-      pthread_mutex_init(&mutex[i], NULL);
+  //SET MUTEX
+  for (size_t d = 0; d < banks; d++) {
+    pthread_mutex_init(&mutex[d], NULL);
   }
 
-  //SET MONEY AT BANKS
-  for (size_t i = 0; i < banks; i++) {
-      banks_money[i] = 10000;
+  //SET MONEY
+  for (size_t b = 0; b < banks; b++) {
+    banks_money[b] = 10000;
+    flag_money[b] = 1;
   }
 
-  //CREATE PTHREADS
-  for (size_t i = 0; i < trans; i++) {
-      pthread_create(&banks_th[i], NULL, &transaction, (void *) i);
+  //CREATE PTHREAD
+  for (long x = 0; x < trans; x++) {
+    pthread_create(&banks_t[x], NULL, &transaction, (void*)x);
   }
 
-  //JOIN PTHREADS
-  for (size_t i = 0; i < trans; i++) {
-      pthread_join(banks_th[i], NULL);
+  //JOIN PTHREAD
+  for (size_t y = 0; y < trans; y++) {
+    pthread_join(banks_t[y],NULL);
   }
 
-  //DESTROY MUTEXES
-  for (size_t i = 0; i < banks; i++) {
-      pthread_mutex_destroy(&mutex[i]);
+  //SHOW THE MONEY IN THE BANKS
+  for (size_t a = 0; a < banks; a++) {
+    printf("bank:%ld\t|  %d\n",a+1, banks_money[a]);
   }
 
-  //SHOW MONEY AT BANKS
-  for (size_t i = 0; i < banks; i++) {
-      printf("bank:%ld | %d\n",i+1, banks_money[i]);
-  }
   return 0;
 }
